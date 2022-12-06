@@ -1,6 +1,11 @@
-﻿open System.IO
+﻿namespace prob1
 
-let f = File.ReadAllLines("../../../input.txt")
+(*
+// Problem 1
+
+open System.IO
+
+let f = File.ReadAllLines("../../../input1.txt")
 
 let elves = Array.zeroCreate 10000
 let mutable count = 0
@@ -19,3 +24,4 @@ let c =
     |> Array.sortDescending
 
 printfn "%i" (c[0] + c[1] + c[2])
+*)
