@@ -8,7 +8,8 @@
   <ItemGroup>
     <Compile Include="Problem2.fs" />
     <Compile Include="Problem1.fs" />
-    <Compile Include="main.fs" />
+    <Compile Include="Problem6.fs" />
+    <Compile Include="Problem7.fs" />
   </ItemGroup>
 
 </Project>

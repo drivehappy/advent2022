@@ -1,4 +1,7 @@
-﻿open System.IO
+﻿namespace Problem6
+
+(*
+open System.IO
 
 let f = File.ReadAllLines("../../../input.txt")
 
@@ -13,3 +16,4 @@ let g =
             printfn "Index: %i" (i + 14)
             System.Environment.Exit(0)
     )
+*)
