@@ -1,4 +1,7 @@
-﻿open System.IO
+﻿namespace Problem7
+
+(*
+open System.IO
 open System.Collections
 
 let f = File.ReadAllLines("../../../input7.txt")
@@ -61,7 +64,7 @@ let rec updateDirSize (t : Dir) : int =
     sumDir
 
 let _ = updateDirSize rootTree
-
+*)
 
 (* Solution 1
 let rec sumFiltered (t : Dir) : int =
@@ -78,7 +81,7 @@ let rec sumFiltered (t : Dir) : int =
 printfn "%A" (sumFiltered rootTree)
 *)
 
-
+(*
 // Soln 2
 let totalConsumed = rootTree.totalsize
 let target = 30_000_000 - ((70_000_000) - totalConsumed)
@@ -106,3 +109,4 @@ let smallestTotal =
 printfn "%A" totalConsumed
 printfn "%A" target
 printfn "%A" smallestTotal
+*)
