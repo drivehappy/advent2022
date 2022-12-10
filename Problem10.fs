@@ -1,96 +1,47 @@
-﻿namespace prob10
+﻿module prob10
 
-(*
 open System.IO
-open System.Collections
 
 let f = File.ReadAllLines("../../../input10.txt")
 
-type Op =
-    | Noop
-    | Addx of int
+//
+let (|Noop|_|) (s: string) =
+    if s.Split(' ')[0] = "noop" then Some () else None
 
-let ops =
+let (|Addx|_|) (s: string) =
+    let s2 = s.Split(' ')
+    if s2[0] = "addx" then Some (s2[1] |> int) else None
+   
+// Build the values at each cycle index, accumulating our x register as we go
+let cycleValues =
     f
-    |> Array.map (fun x ->
-        match x with
-        | "noop" -> Noop
-        | s ->
-            let s1 = s.Split(' ')
-            Addx (s1[1] |> int)
-    )
+    |> Array.fold (fun (s, x) op ->
+        match op with
+        | Noop ->
+            (x :: s, x)
+        | Addx x2 ->
+            let s' = x :: x :: s
+            (s', x + x2)
+    ) ([], 1)
+    |> fst
+    |> List.rev
+    |> List.indexed
+    |> List.map (fun (i, x) -> (i+1, x))
+
+// Solution 1
+let cycleIndicies = [ 20; 60; 100; 140; 180; 220 ]
+
+cycleValues
+|> List.filter (fun (i, _) -> cycleIndicies |> List.contains i)
+|> List.sumBy (fun (i, x) -> i * x)
+|> printfn "Soln1: %i"
 
 
-let mutable cycles = [ 20; 60; 100; 140; 180; 220 ]
-
-
-let mutable cycle = 0
-let mutable str: int list = []
-let mutable extraCycle = false
-let mutable gx = 1
-let mutable nextX = 0
-
-let mutable pixels: bool array = Array.zeroCreate (40 * 6)
-let mutable pixelIndex = 0
-
-
-let check() =
-    match cycles with
-    | (h :: t) ->
-        if h = cycle then
-            let s = (cycle * gx)
-            str <- s :: str
-            cycles <- t
-            printfn "%i %i %i" cycle gx s
-            printfn "%A" cycles
-    | [] -> ()
-
-
-// 1
-ops
-|> Array.iter (fun op ->
-    match op with
-    | Noop -> ()
-    | Addx x ->
-        nextX <- x
-        extraCycle <- true
-
-    cycle <- cycle + 1
-    //check()
-    
-    // Draw
-    let m = pixelIndex % 40
-    if m = (gx-1) || m = gx || m = (gx+1) then
-        pixels[pixelIndex] <- true
-    pixelIndex <- pixelIndex + 1
-
-    //
-    if extraCycle then
-
-        // Draw
-        let m = pixelIndex % 40
-        if m = (gx-1) || m = gx || m = (gx+1) then
-            pixels[pixelIndex] <- true
-        pixelIndex <- pixelIndex + 1
-
-        cycle <- cycle + 1 
-        //check()
-
-        gx <- gx + nextX
-        extraCycle <- false
-        
-
+// Solution 2
+printfn "Soln2:"
+cycleValues
+|> List.iter (fun (i, x) ->
+    let m = (i-1) % 40
+    if m = 0 && i > 1 then printfn ""
+    printf (if m = (x-1) || m = x || m = (x+1) then "#" else ".")
 )
-
-//let s = str |> List.sum
-//printfn "%i" s
-
-// 2
-for y in 0..5 do
-    for x in 0..39 do
-        if pixels[(y * 40) + x] then
-            printf "#"
-        else
-            printf "."
-    printfn ""
-*)
