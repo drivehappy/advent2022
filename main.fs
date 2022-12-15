@@ -2,4 +2,4 @@
 
 open System.IO
 
-let f = File.ReadAllLines("../../../input14.txt")
+let f = File.ReadAllLines("../../../input16a.txt")
